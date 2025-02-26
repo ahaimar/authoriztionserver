@@ -1,0 +1,52 @@
+
+
+                          ################################################################
+                          #     This configuration file
+                          #
+
+server:
+  port: 9090
+
+spring:
+  application:
+    name: authorizationServer
+  cloud:
+    discovery:
+      enabled: true
+  profiles:
+    active: ${ACTIVE_PROFILE:dev}
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-test-query: SELECT 1
+  jpa:
+    database: POSTGRES
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: ${POSTGRES_DATABASE}
+        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+        format_sql: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://${USER_NAME}:${PASSWORD}@localhost:5002/eureka/service
+
+ui:
+  app:
+    url: ${UI_APP_URL}
+
+keys:
+  private: ${PRIVATE_KEYS}
+  public: ${PUBLIC_KEYS}
